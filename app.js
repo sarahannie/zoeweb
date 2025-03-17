@@ -51,14 +51,15 @@ app.post('/register', async (req, res) => {
 });
 
 // GET Endpoint
+
 app.get('/registrations', async (req, res) => {
-  try {
-    const registrations = await Registration.find();
-    res.status(200).json(registrations);
-  } catch (error) {
-    res.status(500).send('Error fetching registrations');
-  }
-});
+    try {
+      const registrations = await Registration.find();
+      res.status(200).json(registrations);
+    } catch (error) {
+      res.status(500).send('Error fetching registrations');
+    }
+  });
 
 // PUT Endpoint
 app.put('/registrations/:id', async (req, res) => {
