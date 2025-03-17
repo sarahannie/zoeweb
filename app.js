@@ -23,7 +23,7 @@ const atlasUrl = process.env.MONGODB_URI;
 mongoose.connect(atlasUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  poolSize: 10, // Increase connection pool size
+
 })
 .then(() => {
   console.log('Connected to MongoDB Atlas');
