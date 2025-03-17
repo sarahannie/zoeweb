@@ -66,6 +66,10 @@ app.post('/register', async (req, res) => {
 
 // GET Endpoint
 
+app.get('/', async (req, res) => {
+  res.send('welcome to ZEOwebsite!');
+});
+
 app.get('/registrations', async (req, res) => {
     try {
       const registrations = await Registration.find();
