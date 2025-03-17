@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const Registration = require('./models/Registration');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000; 
 
 // Middleware
 app.use(bodyParser.json());
@@ -92,7 +92,7 @@ app.put('/registrations/:id', async (req, res) => {
   }
 });
 
-module.exports = app;
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
