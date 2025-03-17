@@ -7,19 +7,33 @@ const Registration = require('./models/Registration');
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Middleware
 app.use(bodyParser.json());
 
+// Timeout handling
+app.use((req, res, next) => {
+  req.setTimeout(5000); // Set request timeout to 5 seconds
+  res.setTimeout(5000); // Set response timeout to 5 seconds
+  next();
+});
+
+// MongoDB Connection
 const atlasUrl = process.env.MONGODB_URI;
 
 mongoose.connect(atlasUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  poolSize: 10, // Increase connection pool size
 })
 .then(() => {
   console.log('Connected to MongoDB Atlas');
 })
 .catch((err) => {
   console.error('Failed to connect to MongoDB Atlas:', err);
+});
+
+mongoose.connection.on('error', (err) => {
+  console.error('MongoDB connection error:', err);
 });
 
 // POST Endpoint
@@ -78,6 +92,7 @@ app.put('/registrations/:id', async (req, res) => {
   }
 });
 
+module.exports = app;
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
