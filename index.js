@@ -4,10 +4,12 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Registration = require('./models/Registration');
 const cors = require('cors');
-app.use(cors());
+
 
 const app = express();
-const port = process.env.PORT || 3000; 
+const port = process.env.PORT || 3000;
+
+app.use(cors());
 
 // Middleware 
 app.use(bodyParser.json());
