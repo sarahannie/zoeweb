@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Registration = require('./models/Registration');
+const stripe = require('stripe')(sk_test_51QlLHvHxk7gHN0aTVNPdFmga59jZ7UFL025vlnidcIW9vHvxHCZOJh0U2iYXwEmnjDpGsKeaX18lait9FgT1CkEd00sfmen7ay);
 
 
 
@@ -66,6 +67,22 @@ app.post('/register', async (req, res) => {
     res.status(201).send('Registration Successful!');
   } catch (error) {
     res.status(500).send('Error saving registration');
+  }
+});
+
+app.post('/createPayment', async (req, res) => {
+  const { amount, currency } = req.body;
+
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount, // Amount in cents (e.g., $10.00 = 1000 cents)
+      currency: currency || 'usd', // Default to USD
+    });
+
+    res.status(200).json({ clientSecret: paymentIntent.client_secret });
+  } catch (error) {
+    console.error('Error creating payment intent:', error);
+    res.status(500).json({ error: 'Failed to create payment intent' });
   }
 });
 
